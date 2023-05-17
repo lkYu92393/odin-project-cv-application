@@ -3,3 +3,18 @@ div.main {
     padding: 20px;
     margin: auto;
 }
+
+div.grid {
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px 5px;
+}
+
+div.grid>*.row {
+    grid-column: span 2;
+}
+
+textarea {
+    resize: vertical;
+}
