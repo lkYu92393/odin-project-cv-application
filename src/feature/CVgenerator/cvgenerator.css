@@ -18,3 +18,11 @@ div.grid>*.row {
 textarea {
     resize: vertical;
 }
+
+div.action {
+    padding: 20px 0;
+}
+
+div.action>button {
+    margin: 0 10px 0 0;
+}

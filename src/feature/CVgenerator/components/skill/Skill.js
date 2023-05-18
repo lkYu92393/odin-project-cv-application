@@ -3,68 +3,62 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-class Education extends Component {
+class Skill extends Component {
     state = {
-        education: [
+        skill: [
             {
                 key: getRandomString()
                 , title: ""
-                , organization: ""
-                , dateFrom: ""
-                , dateTo: ""
+                , remark: ""
             }
         ]
     }
 
     onChangeHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.education;
+        const tempList = this.state.skill;
         if (event.target.tagName === "BUTTON") {
             tempList.splice(tempList.indexOf(tempList.find(obj => obj.key === event.target.parentNode.id)), 1);
         } else {
             tempList.find(obj => obj.key === event.target.parentNode.id)[event.target.name] = event.target.value;
         }
         this.setState({
-            education: tempList
+            skill: tempList
         })
-        this.props.setEducation(tempList);
+        this.props.setSkill(tempList);
     }
 
     addButtonHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.education;
-        tempList.push({
-            key: getRandomString()
-            , title: ""
-            , organization: ""
-            , dateFrom: ""
-            , dateTo: ""
-        });
+        const tempList = this.state.skill;
+        tempList.push(
+            {
+                key: getRandomString()
+                , title: ""
+                , remark: ""
+            });
         this.setState({
-            education: tempList
+            skill: tempList
         })
-        this.props.setEducation(tempList);
+        this.props.setSkill(tempList);
     }
 
     render() {
         return (
-            <Section title="Education">
-                {this.state.education.map((obj, index) => {
+            <Section title="Skill">
+                {this.state.skill.map((obj, index) => {
                     if (this.props.isPreview) {
                         return (
                             <div className="grid" id={obj.key} key={obj.key}>
                                 <h3 className="row">{obj.title}</h3>
-                                <h2 className="row">{obj.organization}</h2>
-                                <p className="row">{obj.dateFrom} to {obj.dateTo}</p>
+                                <p  className="row">{obj.remark}</p>
                             </div>
                         )
                     } else {
                         return (
                             <div className="grid" id={obj.key} key={obj.key}>
-                                <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Title" />
-                                <input className="row" name="organization" onChange={this.onChangeHandler} value={obj.organization} placeholder="Organization" />
-                                <input name="dateFrom" onChange={this.onChangeHandler} value={obj.dateFrom} placeholder="From" />
-                                <input name="dateTo" onChange={this.onChangeHandler} value={obj.dateTo} placeholder="To" />
+                                <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Skill" />
+                                <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Skill Description" />
                                 <button onClick={this.onChangeHandler}>Delete</button>
                             </div>
                         )
@@ -76,4 +70,4 @@ class Education extends Component {
     }
 }
 
-export default Education;
+export default Skill;
