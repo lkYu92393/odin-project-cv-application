@@ -66,20 +66,18 @@ class WorkExperience extends Component {
                             )
                         } else {
                             return (
-                                <>
-                                    <div className="grid" id={obj.key} key={obj.key}>
-                                        <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Title" />
-                                        <input className="row" name="organization" onChange={this.onChangeHandler} value={obj.organization} placeholder="Organization" />
-                                        <input name="dateFrom" onChange={this.onChangeHandler} value={obj.dateFrom} placeholder="From" />
-                                        <input name="dateTo" onChange={this.onChangeHandler} value={obj.dateTo} placeholder="To" />
-                                        <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Job Description" />
-                                        <button onClick={this.onChangeHandler}>Delete</button>
-                                    </div>
-                                    <button onClick={this.addButtonHandler}>Add</button>
-                                </>
+                                <div className="grid" id={obj.key} key={obj.key}>
+                                    <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Title" />
+                                    <input className="row" name="organization" onChange={this.onChangeHandler} value={obj.organization} placeholder="Organization" />
+                                    <input name="dateFrom" onChange={this.onChangeHandler} value={obj.dateFrom} placeholder="From" />
+                                    <input name="dateTo" onChange={this.onChangeHandler} value={obj.dateTo} placeholder="To" />
+                                    <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Job Description" />
+                                    <button onClick={this.onChangeHandler}>Delete</button>
+                                </div>
                             )
                         }
                     })}
+                    {this.props.isPreview ? null : <button onClick={this.addButtonHandler}>Add</button>}
                 </Section>
             )
         }

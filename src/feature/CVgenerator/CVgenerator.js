@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Header from "../../components/header/Header";
 import { PersonalInformation, Education, WorkExperience, Skill } from './components/index';
 
@@ -9,35 +10,17 @@ import "./cvgenerator.css";
 class CVgenerator extends Component {
     state = {
         key: getRandomString()
-        ,preview: false
-        ,personalInformation: {}
+        , preview: false
+        , personalInformation: {}
         , education: []
         , workExperience: []
         , skill: []
     }
 
-    setPersonalInformation = (dict) => {
-        this.setState({
-            personalInformation: dict
-        });
-    }
-
-    setEducation = (list) => {
-        this.setState({
-            education: list
-        })
-    }
-
-    setWorkExperience = (list) => {
-        this.setState({
-            workExperience: list
-        })
-    }
-
-    setSkill = (list) => {
-        this.setState({
-            skill: list
-        })
+    setStateCallback = (stateName, value) => {
+        const tempDict = {}
+        tempDict[stateName] = value
+        this.setState(tempDict)
     }
 
     changePreview = (event) => {
@@ -46,27 +29,27 @@ class CVgenerator extends Component {
         })
     }
 
-    clearAll = () => {
-        this.setState({
+    clearAll = (event) => {
+        const emptyState = {
             key: getRandomString()
-            ,preview: false
-            ,personalInformation: {}
+            , personalInformation: {}
             , education: []
             , workExperience: []
             , skill: []
-        })
+        }
+        this.setState(emptyState)
     }
 
     render() {
         return (
             <div>
-                <Header />
+                {this.state.preview ? null : <Header />}
                 <div className="main">
                     <div key={this.state.key}>
-                        <PersonalInformation setPersonalInformation={this.setPersonalInformation} isPreview={this.state.preview} />
-                        <Education setEducation={this.setEducation} isPreview={this.state.preview} />
-                        <WorkExperience setWorkExperience={this.setWorkExperience} isPreview={this.state.preview} />
-                        <Skill setSkill={this.setSkill} isPreview={this.state.preview} />
+                        <PersonalInformation setPersonalInformation={(value) => { this.setStateCallback("personalInformation", value) }} isPreview={this.state.preview} />
+                        <Education setEducation={(value) => { this.setStateCallback("education", value) }} isPreview={this.state.preview} />
+                        <WorkExperience setWorkExperience={(value) => { this.setStateCallback("workExperience", value) }} isPreview={this.state.preview} />
+                        <Skill setSkill={(value) => { this.setStateCallback("skill", value) }} isPreview={this.state.preview} />
                     </div>
                     <div className="action">
                         <button onClick={this.changePreview}>{this.state.preview ? "Edit" : "Preview"}</button>

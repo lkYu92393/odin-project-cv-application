@@ -59,17 +59,15 @@ class Skill extends Component {
                             )
                         } else {
                             return (
-                                <>
-                                    <div className="grid" id={obj.key} key={obj.key}>
-                                        <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Skill" />
-                                        <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Skill Description" />
-                                        <button onClick={this.onChangeHandler}>Delete</button>
-                                    </div>
-                                    <button onClick={this.addButtonHandler}>Add</button>
-                                </>
+                                <div className="grid" id={obj.key} key={obj.key}>
+                                    <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Skill" />
+                                    <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Skill Description" />
+                                    <button onClick={this.onChangeHandler}>Delete</button>
+                                </div>
                             )
                         }
                     })}
+                    {this.props.isPreview ? null : <button onClick={this.addButtonHandler}>Add</button>}
                 </Section>
             )
         }
