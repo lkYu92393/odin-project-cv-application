@@ -3,36 +3,45 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-class Education extends Component {
-    state = {
-        education: [
-            {
-                key: getRandomString()
-                , title: ""
-                , organization: ""
-                , dateFrom: ""
-                , dateTo: ""
-            }
-        ]
-    }
 
+const initEducation = () => {
+    if (localStorage.getItem("education")) {
+        try {
+            let tempList = JSON.parse(localStorage.getItem("education"));
+            if (tempList.length > 0) {
+                return tempList;
+            }
+        } catch {
+            console.log("Error parsing saved value for education.");
+        }
+    }
+    return [
+        {
+            key: getRandomString()
+            , title: ""
+            , organization: ""
+            , dateFrom: ""
+            , dateTo: ""
+        }
+    ]
+}
+
+
+class Education extends Component {
     onChangeHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.education;
+        const tempList = this.props.data;
         if (event.target.tagName === "BUTTON") {
             tempList.splice(tempList.indexOf(tempList.find(obj => obj.key === event.target.parentNode.id)), 1);
         } else {
             tempList.find(obj => obj.key === event.target.parentNode.id)[event.target.name] = event.target.value;
         }
-        this.setState({
-            education: tempList
-        })
         this.props.setEducation(tempList);
     }
 
     addButtonHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.education;
+        const tempList = this.props.data;
         tempList.push({
             key: getRandomString()
             , title: ""
@@ -40,19 +49,16 @@ class Education extends Component {
             , dateFrom: ""
             , dateTo: ""
         });
-        this.setState({
-            education: tempList
-        })
         this.props.setEducation(tempList);
     }
 
     render() {
-        if (this.props.isPreview && this.state.education.every(obj => !obj.title)) {
+        if (this.props.isPreview && this.props.data.every(obj => !obj.title)) {
             return null;
         } else {
             return (
                 <Section title="Education">
-                    {this.state.education.map((obj, index) => {
+                    {this.props.data.map((obj, index) => {
                         if (this.props.isPreview) {
                             return (
                                 <div className="grid" id={obj.key} key={obj.key}>
@@ -80,4 +86,5 @@ class Education extends Component {
     }
 }
 
+export { initEducation };
 export default Education;

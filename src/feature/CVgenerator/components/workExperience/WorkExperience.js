@@ -3,37 +3,44 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-class WorkExperience extends Component {
-    state = {
-        workExperience: [
-            {
-                key: getRandomString()
-                , title: ""
-                , organization: ""
-                , dateFrom: ""
-                , dateTo: ""
-                , remark: ""
-            }
-        ]
-    }
 
+const initWorkExperience = () => {
+    if (localStorage.getItem("workExperience")) {
+        try {
+            let tempList = JSON.parse(localStorage.getItem("workExperience"));
+            if (tempList.length > 0) {
+                return tempList;
+            }
+        } catch {
+            console.log("Error parsing saved value for workExperience.");
+        }
+    }
+    return [
+        {
+            key: getRandomString()
+            , title: ""
+            , organization: ""
+            , dateFrom: ""
+            , dateTo: ""
+            , remark: ""
+        }
+    ]
+}
+class WorkExperience extends Component {
     onChangeHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.workExperience;
+        const tempList = this.props.data;
         if (event.target.tagName === "BUTTON") {
             tempList.splice(tempList.indexOf(tempList.find(obj => obj.key === event.target.parentNode.id)), 1);
         } else {
             tempList.find(obj => obj.key === event.target.parentNode.id)[event.target.name] = event.target.value;
         }
-        this.setState({
-            workExperience: tempList
-        })
         this.props.setWorkExperience(tempList);
     }
 
     addButtonHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.workExperience;
+        const tempList = this.props.data;
         tempList.push({
             key: getRandomString()
             , title: ""
@@ -42,19 +49,16 @@ class WorkExperience extends Component {
             , dateTo: ""
             , remark: ""
         });
-        this.setState({
-            workExperience: tempList
-        })
         this.props.setWorkExperience(tempList);
     }
 
     render() {
-        if (this.props.isPreview && this.state.workExperience.every(obj => !obj.title)) {
+        if (this.props.isPreview && this.props.data.every(obj => !obj.title)) {
             return null;
         } else {
             return (
                 <Section title="Work Experience">
-                    {this.state.workExperience.map((obj, index) => {
+                    {this.props.data.map((obj, index) => {
                         if (this.props.isPreview) {
                             return (
                                 <div className="grid" id={obj.key} key={obj.key}>
@@ -84,4 +88,5 @@ class WorkExperience extends Component {
     }
 }
 
+export { initWorkExperience };
 export default WorkExperience;

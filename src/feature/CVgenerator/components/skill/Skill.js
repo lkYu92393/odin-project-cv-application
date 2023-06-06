@@ -3,53 +3,57 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-class Skill extends Component {
-    state = {
-        skill: [
-            {
-                key: getRandomString()
-                , title: ""
-                , remark: ""
-            }
-        ]
-    }
 
+const initSkill = () => {
+    if (localStorage.getItem("skill")) {
+        try {
+            let tempList = JSON.parse(localStorage.getItem("skill"));
+            if (tempList.length > 0) {
+                return tempList;
+            }
+        } catch {
+            console.log("Error parsing saved value for skill.");
+        }
+    }
+    return [
+        {
+            key: getRandomString()
+            , title: ""
+            , remark: ""
+        }
+    ]
+}
+class Skill extends Component {
     onChangeHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.skill;
+        const tempList = this.props.data;
         if (event.target.tagName === "BUTTON") {
             tempList.splice(tempList.indexOf(tempList.find(obj => obj.key === event.target.parentNode.id)), 1);
         } else {
             tempList.find(obj => obj.key === event.target.parentNode.id)[event.target.name] = event.target.value;
         }
-        this.setState({
-            skill: tempList
-        })
         this.props.setSkill(tempList);
     }
 
     addButtonHandler = (event) => {
         event.preventDefault();
-        const tempList = this.state.skill;
+        const tempList = this.props.data;
         tempList.push(
             {
                 key: getRandomString()
                 , title: ""
                 , remark: ""
             });
-        this.setState({
-            skill: tempList
-        })
         this.props.setSkill(tempList);
     }
 
     render() {
-        if (this.props.isPreview && this.state.skill.every(obj => !obj.title)) {
+        if (this.props.isPreview && this.props.data.every(obj => !obj.title)) {
             return null;
         } else {
             return (
                 <Section title="Skill">
-                    {this.state.skill.map((obj, index) => {
+                    {this.props.data.map((obj, index) => {
                         if (this.props.isPreview) {
                             return (
                                 <div className="grid" id={obj.key} key={obj.key}>
@@ -74,4 +78,5 @@ class Skill extends Component {
     }
 }
 
+export { initSkill };
 export default Skill;
