@@ -44,29 +44,35 @@ class Skill extends Component {
     }
 
     render() {
-        return (
-            <Section title="Skill">
-                {this.state.skill.map((obj, index) => {
-                    if (this.props.isPreview) {
-                        return (
-                            <div className="grid" id={obj.key} key={obj.key}>
-                                <h3 className="row">{obj.title}</h3>
-                                <p  className="row">{obj.remark}</p>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div className="grid" id={obj.key} key={obj.key}>
-                                <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Skill" />
-                                <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Skill Description" />
-                                <button onClick={this.onChangeHandler}>Delete</button>
-                            </div>
-                        )
-                    }
-                })}
-                <button onClick={this.addButtonHandler}>Add</button>
-            </Section>
-        )
+        if (this.props.isPreview && this.state.skill.every(obj => !obj.title)) {
+            return null;
+        } else {
+            return (
+                <Section title="Skill">
+                    {this.state.skill.map((obj, index) => {
+                        if (this.props.isPreview) {
+                            return (
+                                <div className="grid" id={obj.key} key={obj.key}>
+                                    <h3 className="row">{obj.title}</h3>
+                                    <p className="row">{obj.remark}</p>
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <>
+                                    <div className="grid" id={obj.key} key={obj.key}>
+                                        <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Skill" />
+                                        <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Skill Description" />
+                                        <button onClick={this.onChangeHandler}>Delete</button>
+                                    </div>
+                                    <button onClick={this.addButtonHandler}>Add</button>
+                                </>
+                            )
+                        }
+                    })}
+                </Section>
+            )
+        }
     }
 }
 

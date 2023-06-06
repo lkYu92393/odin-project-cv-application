@@ -49,34 +49,40 @@ class WorkExperience extends Component {
     }
 
     render() {
-        return (
-            <Section title="Work Experience">
-                {this.state.workExperience.map((obj, index) => {
-                    if (this.props.isPreview) {
-                        return (
-                            <div className="grid" id={obj.key} key={obj.key}>
-                                <h3 className="row">{obj.title}</h3>
-                                <h2 className="row">{obj.organization}</h2>
-                                <p className="row">{obj.dateFrom} to {obj.dateTo}</p>
-                                <p className="row">{obj.remark}</p>
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div className="grid" id={obj.key} key={obj.key}>
-                                <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Title" />
-                                <input className="row" name="organization" onChange={this.onChangeHandler} value={obj.organization} placeholder="Organization" />
-                                <input name="dateFrom" onChange={this.onChangeHandler} value={obj.dateFrom} placeholder="From" />
-                                <input name="dateTo" onChange={this.onChangeHandler} value={obj.dateTo} placeholder="To" />
-                                <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Job Description" />
-                                <button onClick={this.onChangeHandler}>Delete</button>
-                            </div>
-                        )
-                    }
-                })}
-                <button onClick={this.addButtonHandler}>Add</button>
-            </Section>
-        )
+        if (this.props.isPreview && this.state.workExperience.every(obj => !obj.title)) {
+            return null;
+        } else {
+            return (
+                <Section title="Work Experience">
+                    {this.state.workExperience.map((obj, index) => {
+                        if (this.props.isPreview) {
+                            return (
+                                <div className="grid" id={obj.key} key={obj.key}>
+                                    <h3 className="row">{obj.title}</h3>
+                                    <h2 className="row">{obj.organization}</h2>
+                                    <p className="row">{obj.dateFrom} to {obj.dateTo}</p>
+                                    <p className="row">{obj.remark}</p>
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <>
+                                    <div className="grid" id={obj.key} key={obj.key}>
+                                        <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Title" />
+                                        <input className="row" name="organization" onChange={this.onChangeHandler} value={obj.organization} placeholder="Organization" />
+                                        <input name="dateFrom" onChange={this.onChangeHandler} value={obj.dateFrom} placeholder="From" />
+                                        <input name="dateTo" onChange={this.onChangeHandler} value={obj.dateTo} placeholder="To" />
+                                        <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Job Description" />
+                                        <button onClick={this.onChangeHandler}>Delete</button>
+                                    </div>
+                                    <button onClick={this.addButtonHandler}>Add</button>
+                                </>
+                            )
+                        }
+                    })}
+                </Section>
+            )
+        }
     }
 }
 

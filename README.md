@@ -9,3 +9,16 @@ Odin Project is a website for learning front end development. It is updated and 
 # Objective
 
 This app allows user to build their CV and export for use.
+
+# Functionality
+
+Base:
+Create CV with
+- Personal Info (name, email, phone)
+- Education
+- WorkExperience
+- Skill
+
+Data is saved with cookies.
+
+There is a preview mode and export to pdf (not implemented yet).
