@@ -3,7 +3,6 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-
 const initWorkExperience = () => {
     if (localStorage.getItem("workExperience")) {
         try {
@@ -26,6 +25,7 @@ const initWorkExperience = () => {
         }
     ]
 }
+
 class WorkExperience extends Component {
     onChangeHandler = (event) => {
         event.preventDefault();

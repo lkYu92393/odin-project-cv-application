@@ -3,7 +3,6 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-
 const initEducation = () => {
     if (localStorage.getItem("education")) {
         try {
@@ -25,7 +24,6 @@ const initEducation = () => {
         }
     ]
 }
-
 
 class Education extends Component {
     onChangeHandler = (event) => {
