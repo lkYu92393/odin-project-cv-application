@@ -33,12 +33,12 @@ class CVgenerator extends Component {
     clearAll = (event) => {
         event.preventDefault();
         const emptyState = {
-            personalInformation: {}
-            , education: []
-            , workExperience: []
-            , skill: []
+            personalInformation: initPersonalInformation(true)
+            , education: initEducation(true)
+            , workExperience: initWorkExperience(true)
+            , skill: initSkill(true)
         }
-        this.setState(emptyState)
+        this.setState(emptyState);
     }
 
     saveData = (event) => {

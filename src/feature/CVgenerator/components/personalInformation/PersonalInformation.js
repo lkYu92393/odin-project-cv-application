@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import Section from "../../../../components/section/Section";
 
-const initPersonalInformation = () => {
+const initPersonalInformation = (isClear = false) => {
     let base = {
         firstName: ""
         , lastName: ""
         , email: ""
         , phoneNumber: ""
+    };
+    if (isClear) {
+        return base;
     }
     if (localStorage.getItem("personalInformation")) {
         const savedDict = JSON.parse(localStorage.getItem("personalInformation"))

@@ -3,7 +3,17 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-const initSkill = () => {
+const initSkill = (isClear = false) => {
+    let base = [
+        {
+            key: getRandomString()
+            , title: ""
+            , remark: ""
+        }
+    ];
+    if (isClear) {
+        return base;
+    }
     if (localStorage.getItem("skill")) {
         try {
             let tempList = JSON.parse(localStorage.getItem("skill"));
@@ -14,13 +24,7 @@ const initSkill = () => {
             console.log("Error parsing saved value for skill.");
         }
     }
-    return [
-        {
-            key: getRandomString()
-            , title: ""
-            , remark: ""
-        }
-    ]
+    return base;
 }
 
 class Skill extends Component {

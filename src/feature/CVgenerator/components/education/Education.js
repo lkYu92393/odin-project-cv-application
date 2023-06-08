@@ -3,7 +3,19 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-const initEducation = () => {
+const initEducation = (isClear = false) => {
+    let base = [
+        {
+            key: getRandomString()
+            , title: ""
+            , organization: ""
+            , dateFrom: ""
+            , dateTo: ""
+        }
+    ];
+    if (isClear) {
+        return base;
+    }
     if (localStorage.getItem("education")) {
         try {
             let tempList = JSON.parse(localStorage.getItem("education"));
@@ -14,15 +26,7 @@ const initEducation = () => {
             console.log("Error parsing saved value for education.");
         }
     }
-    return [
-        {
-            key: getRandomString()
-            , title: ""
-            , organization: ""
-            , dateFrom: ""
-            , dateTo: ""
-        }
-    ]
+    return base;
 }
 
 class Education extends Component {

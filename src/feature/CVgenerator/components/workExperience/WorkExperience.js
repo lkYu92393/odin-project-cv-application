@@ -3,7 +3,20 @@ import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
 
-const initWorkExperience = () => {
+const initWorkExperience = (isClear = false) => {
+    let base = [
+        {
+            key: getRandomString()
+            , title: ""
+            , organization: ""
+            , dateFrom: ""
+            , dateTo: ""
+            , remark: ""
+        }
+    ];
+    if (isClear) {
+        return base;
+    }
     if (localStorage.getItem("workExperience")) {
         try {
             let tempList = JSON.parse(localStorage.getItem("workExperience"));
@@ -14,16 +27,7 @@ const initWorkExperience = () => {
             console.log("Error parsing saved value for workExperience.");
         }
     }
-    return [
-        {
-            key: getRandomString()
-            , title: ""
-            , organization: ""
-            , dateFrom: ""
-            , dateTo: ""
-            , remark: ""
-        }
-    ]
+    return base;
 }
 
 class WorkExperience extends Component {
