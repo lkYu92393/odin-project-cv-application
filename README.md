@@ -21,4 +21,4 @@ Create CV with
 
 Data is saved with cookies.
 
-There is a preview mode and export to pdf (not implemented yet).
+There is a preview mode and export to pdf.

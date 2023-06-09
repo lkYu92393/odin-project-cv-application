@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import html2pdf from 'html-to-pdf-js';
 
 import Header from "../../components/header/Header";
 import { PersonalInformation, initPersonalInformation, Education, initEducation, WorkExperience, initWorkExperience, Skill, initSkill } from './components/index';
@@ -48,12 +49,22 @@ class CVgenerator extends Component {
         })
     }
 
+    generatePDF = (event) => {
+        event.preventDefault();
+        const printElem = document.getElementById("element-to-print");
+        let options = {
+            margin: 1,
+            filename: `cv_${new Date().toLocaleDateString("en-UK").replaceAll("/","")}`
+        };
+        html2pdf().set(options).from(printElem).save();
+    }
+
     render() {
         return (
             <div>
                 {this.state.preview ? null : <Header />}
                 <div className="main">
-                    <div>
+                    <div id="element-to-print">
                         <PersonalInformation setPersonalInformation={(value) => { this.setStateCallback("personalInformation", value) }} data={this.state.personalInformation} isPreview={this.state.preview} />
                         <Education setEducation={(value) => { this.setStateCallback("education", value) }} data={this.state.education} isPreview={this.state.preview} />
                         <WorkExperience setWorkExperience={(value) => { this.setStateCallback("workExperience", value) }} data={this.state.workExperience} isPreview={this.state.preview} />
@@ -63,6 +74,7 @@ class CVgenerator extends Component {
                         <button onClick={this.changePreview}>{this.state.preview ? "Edit" : "Preview"}</button>
                         {this.state.preview ? null : <button onClick={this.clearAll}>Clear All</button>}
                         {this.state.preview ? null : <button onClick={this.saveData}>Save</button>}
+                        {this.state.preview ? <button onClick={this.generatePDF}>Export as PDF</button> : null}
                     </div>
                 </div>
             </div>
