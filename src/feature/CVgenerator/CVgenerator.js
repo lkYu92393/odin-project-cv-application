@@ -52,12 +52,11 @@ class CVgenerator extends Component {
     generatePDF = (event) => {
         event.preventDefault();
         const printElem = document.getElementById("print");
-        // let options = {
-        //     margin: 1,
-        //     filename: `cv_${new Date().toLocaleDateString("en-UK").replaceAll("/","")}`
-        // };
-        // html2pdf().set(options).from(printElem).save();
-        html2pdf(printElem);
+        let options = {
+            margin: 1,
+            filename: `cv_${new Date().toLocaleDateString("en-UK").replaceAll("/", "")}`
+        };
+        html2pdf().set(options).from(printElem).save();
     }
 
     render() {
