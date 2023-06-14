@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import CVgenerator from "./feature/CVgenerator/CVgenerator";
 import './App.css';
 
-class App extends Component {
-  render () {
+const App = () => {
     return (
-      <div id="App">
-        <CVgenerator />
-      </div>
-    );
-  }
+        <div id="App">
+            <CVgenerator />
+        </div>
+    )
 }
 
 export default App;

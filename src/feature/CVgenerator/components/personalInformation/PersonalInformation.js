@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Section from "../../../../components/section/Section";
 
 const initPersonalInformation = (isClear = false) => {
@@ -18,32 +18,32 @@ const initPersonalInformation = (isClear = false) => {
     return base;
 }
 
-class PersonalInformation extends Component {
-    personalInformationHandler = (event) => {
+const PersonalInformation = (props) => {
+
+    const personalInformationHandler = (event) => {
         event.preventDefault();
-        const tempDict = this.props.data;
+        const tempDict = props.data;
         tempDict[event.target.name] = event.target.value;
-        this.props.setPersonalInformation(tempDict);
+        props.setPersonalInformation(tempDict);
     }
 
-    render() {
+    if (props.isPreview) {
+        return (
+            <div className="grid">
+                <div className="row">{props.data.firstName} {props.data.lastName}</div>
+                <div>{props.data.email}</div>
+                <div>{props.data.phoneNumber}</div>
+            </div>
+        )
+    } else {
         return (
             <Section title="Personal Information">
-                {
-                    this.props.isPreview ?
-                        <div className="grid">
-                            <div className="row">{this.props.data.firstName} {this.props.data.lastName}</div>
-                            <div>{this.props.data.email}</div>
-                            <div>{this.props.data.phoneNumber}</div>
-                        </div>
-                        :
-                        <div className="grid">
-                            <input name="firstName" onChange={this.personalInformationHandler} value={this.props.data.firstName} placeholder="First Name" />
-                            <input name="lastName" onChange={this.personalInformationHandler} value={this.props.data.lastName} placeholder="Last Name" />
-                            <input name="email" onChange={this.personalInformationHandler} value={this.props.data.email} placeholder="Email" />
-                            <input name="phoneNumber" onChange={this.personalInformationHandler} value={this.props.data.phoneNumber} placeholder="Phone Number" />
-                        </div>
-                }
+                <div className="grid">
+                    <input name="firstName" onChange={personalInformationHandler} value={props.data.firstName} placeholder="First Name" />
+                    <input name="lastName" onChange={personalInformationHandler} value={props.data.lastName} placeholder="Last Name" />
+                    <input name="email" onChange={personalInformationHandler} value={props.data.email} placeholder="Email" />
+                    <input name="phoneNumber" onChange={personalInformationHandler} value={props.data.phoneNumber} placeholder="Phone Number" />
+                </div>
             </Section>
         )
     }

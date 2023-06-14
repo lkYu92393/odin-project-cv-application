@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Section from "../../../../components/section/Section";
 
 import { getRandomString } from '../../../../libs/common';
@@ -27,58 +27,56 @@ const initSkill = (isClear = false) => {
     return base;
 }
 
-class Skill extends Component {
-    onChangeHandler = (event) => {
+const Skill = (props) => {
+    const onChangeHandler = (event) => {
         event.preventDefault();
-        const tempList = this.props.data;
+        const tempList = props.data;
         if (event.target.tagName === "BUTTON") {
             tempList.splice(tempList.indexOf(tempList.find(obj => obj.key === event.target.parentNode.id)), 1);
         } else {
             tempList.find(obj => obj.key === event.target.parentNode.id)[event.target.name] = event.target.value;
         }
-        this.props.setSkill(tempList);
+        props.setSkill(tempList);
     }
 
-    addButtonHandler = (event) => {
+    const addButtonHandler = (event) => {
         event.preventDefault();
-        const tempList = this.props.data;
+        const tempList = props.data;
         tempList.push(
             {
                 key: getRandomString()
                 , title: ""
                 , remark: ""
             });
-        this.props.setSkill(tempList);
+        props.setSkill(tempList);
     }
 
-    render() {
-        if (this.props.isPreview && this.props.data.every(obj => !obj.title)) {
-            return null;
-        } else {
-            return (
-                <Section title="Skill">
-                    {this.props.data.map((obj, index) => {
-                        if (this.props.isPreview) {
-                            return (
-                                <div className="grid" id={obj.key} key={obj.key}>
-                                    <h3 className="row">{obj.title}</h3>
-                                    <p className="row">{obj.remark}</p>
-                                </div>
-                            )
-                        } else {
-                            return (
-                                <div className="grid" id={obj.key} key={obj.key}>
-                                    <input className="row" name="title" onChange={this.onChangeHandler} value={obj.title} placeholder="Skill" />
-                                    <textarea className="row" name="remark" onChange={this.onChangeHandler} value={obj.remark} placeholder="Skill Description" />
-                                    <button onClick={this.onChangeHandler}>Delete</button>
-                                </div>
-                            )
-                        }
-                    })}
-                    {this.props.isPreview ? null : <button onClick={this.addButtonHandler}>Add</button>}
-                </Section>
-            )
-        }
+    if (props.isPreview && props.data.every(obj => !obj.title)) {
+        return null;
+    } else {
+        return (
+            <Section title="Skill">
+                {props.data.map((obj, index) => {
+                    if (props.isPreview) {
+                        return (
+                            <div className="grid" id={obj.key} key={obj.key}>
+                                <h3 className="row">{obj.title}</h3>
+                                <p className="row">{obj.remark}</p>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div className="grid" id={obj.key} key={obj.key}>
+                                <input className="row" name="title" onChange={onChangeHandler} value={obj.title} placeholder="Skill" />
+                                <textarea className="row" name="remark" onChange={onChangeHandler} value={obj.remark} placeholder="Skill Description" />
+                                <button onClick={onChangeHandler}>Delete</button>
+                            </div>
+                        )
+                    }
+                })}
+                {props.isPreview ? null : <button onClick={addButtonHandler}>Add</button>}
+            </Section>
+        )
     }
 }
 
