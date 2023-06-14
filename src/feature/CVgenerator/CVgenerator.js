@@ -51,12 +51,13 @@ class CVgenerator extends Component {
 
     generatePDF = (event) => {
         event.preventDefault();
-        const printElem = document.getElementById("element-to-print");
-        let options = {
-            margin: 1,
-            filename: `cv_${new Date().toLocaleDateString("en-UK").replaceAll("/","")}`
-        };
-        html2pdf().set(options).from(printElem).save();
+        const printElem = document.getElementById("print");
+        // let options = {
+        //     margin: 1,
+        //     filename: `cv_${new Date().toLocaleDateString("en-UK").replaceAll("/","")}`
+        // };
+        // html2pdf().set(options).from(printElem).save();
+        html2pdf(printElem);
     }
 
     render() {
@@ -64,11 +65,13 @@ class CVgenerator extends Component {
             <div>
                 {this.state.preview ? null : <Header />}
                 <div className="main">
-                    <div id="element-to-print">
-                        <PersonalInformation setPersonalInformation={(value) => { this.setStateCallback("personalInformation", value) }} data={this.state.personalInformation} isPreview={this.state.preview} />
-                        <Education setEducation={(value) => { this.setStateCallback("education", value) }} data={this.state.education} isPreview={this.state.preview} />
-                        <WorkExperience setWorkExperience={(value) => { this.setStateCallback("workExperience", value) }} data={this.state.workExperience} isPreview={this.state.preview} />
-                        <Skill setSkill={(value) => { this.setStateCallback("skill", value) }} data={this.state.skill} isPreview={this.state.preview} />
+                    <div id="shadow">
+                        <div id="print">
+                            <PersonalInformation setPersonalInformation={(value) => { this.setStateCallback("personalInformation", value) }} data={this.state.personalInformation} isPreview={this.state.preview} />
+                            <Education setEducation={(value) => { this.setStateCallback("education", value) }} data={this.state.education} isPreview={this.state.preview} />
+                            <WorkExperience setWorkExperience={(value) => { this.setStateCallback("workExperience", value) }} data={this.state.workExperience} isPreview={this.state.preview} />
+                            <Skill setSkill={(value) => { this.setStateCallback("skill", value) }} data={this.state.skill} isPreview={this.state.preview} />
+                        </div>
                     </div>
                     <div className="action">
                         <button onClick={this.changePreview}>{this.state.preview ? "Edit" : "Preview"}</button>

@@ -4,6 +4,16 @@ div.main {
     margin: auto;
 }
 
+div#shadow {
+    box-shadow: 10px 5px 5px black;
+}
+
+div#print {
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+}
+
 div.grid {
     margin: 10px 0;
     display: grid;
